@@ -3,7 +3,6 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    // Creating Users table
     await queryInterface.createTable('Users', {
       id: {
         allowNull: false,
@@ -36,7 +35,6 @@ module.exports = {
       },
     });
 
-    // Creating Contacts table
     await queryInterface.createTable('Contacts', {
       id: {
         allowNull: false,
@@ -48,7 +46,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: 'Users', // Foreign key to Users table
+          model: 'Users', 
           key: 'id',
         },
         onDelete: 'CASCADE',
@@ -88,7 +86,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    // Dropping Contacts and Users tables in reverse order
     await queryInterface.dropTable('Contacts');
     await queryInterface.dropTable('Users');
   },

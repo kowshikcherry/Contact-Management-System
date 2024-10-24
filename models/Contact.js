@@ -17,7 +17,7 @@ const Contact = sequelize.define('Contact', {
     allowNull: false,
     unique: true,
   },
-  phone: {
+  phoneNumber: {
     type: DataTypes.STRING,
     allowNull: false,
   },
@@ -28,10 +28,6 @@ const Contact = sequelize.define('Contact', {
   timezone: {
     type: DataTypes.STRING,
     allowNull: false,
-  },
-  createdAtUTC: {
-    type: DataTypes.DATE,
-    defaultValue: DataTypes.NOW,
   },
 }, {
   timestamps: true,
