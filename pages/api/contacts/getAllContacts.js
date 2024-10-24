@@ -1,9 +1,15 @@
 import Contact from '../../../models/Contact'; 
 import { Op } from 'sequelize';
+import dayjs from 'dayjs'; 
+import utc from 'dayjs/plugin/utc'; 
+import timezone from 'dayjs/plugin/timezone'; 
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export default async function handler(req, res) {
     if (req.method === 'GET') {
-        const { name, email, timezone, sortBy, order = 'ASC' } = req.query;
+        const { name, email, timezone, sortBy, order = 'ASC', startDate, endDate } = req.query;
         
         const whereClause = {};
         
@@ -19,9 +25,10 @@ export default async function handler(req, res) {
             };
         }
 
-        if (timezone) {
-            whereClause.timezone = {
-                [Op.like]: `%${timezone}%`, 
+        if (startDate && endDate) {
+            whereClause.createdAt = {
+                [Op.gte]: new Date(startDate), 
+                [Op.lte]: new Date(endDate), 
             };
         }
 
@@ -31,15 +38,20 @@ export default async function handler(req, res) {
         }
 
         try {
-
             const contacts = await Contact.findAll({
                 where: whereClause,
                 order: orderClause,
             });
 
+            const contactsWithTimezone = contacts.map(contact => ({
+                ...contact.toJSON(), 
+                createdAt: dayjs(contact.createdAt).tz(timezone).format(), 
+                updatedAt: dayjs(contact.updatedAt).tz(timezone).format(), 
+            }));
+
             return res.status(200).json({
                 message: 'Contacts retrieved successfully',
-                contacts,
+                contacts: contactsWithTimezone,
             });
         } catch (error) {
             console.error('Error retrieving contacts:', error);
