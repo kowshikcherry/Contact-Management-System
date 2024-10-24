@@ -19,7 +19,12 @@ const User = sequelize.define('User', {
   password: {
     type: DataTypes.STRING,
     allowNull: false,
-  }
+  },
+  isActive: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: true, 
+    }
 }, {
   timestamps: true,
 });
