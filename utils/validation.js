@@ -1,13 +1,15 @@
-import * as yup from 'yup';
+// utils/validation.js
+import * as Yup from 'yup';
 
-export const validateAddContact = (contactData) => {
-  const schema = yup.object().shape({
-    name: yup.string().required('Name is required'),
-    email: yup.string().email('Invalid email').required('Email is required'),
-    phoneNumber: yup.string().required('Phone number is required'),
-    address: yup.string().required('Address is required'),
-    timezone: yup.string().required('Timezone is required'),
-  });
+export const validateContact = async (data) => {
+    const schema = Yup.object().shape({
+        userId: Yup.number().required('User ID is required'),
+        name: Yup.string().required('Name is required').max(100, 'Name is too long'),
+        email: Yup.string().email('Invalid email format').required('Email is required'),
+        phoneNumber: Yup.string().required('Phone number is required'),
+        address: Yup.string().optional(),
+        timezone: Yup.string().required('Timezone is required'),
+    });
 
-  return schema.validate(contactData, { abortEarly: false });
+    await schema.validate(data, { abortEarly: false });
 };

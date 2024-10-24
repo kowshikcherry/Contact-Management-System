@@ -1,5 +1,5 @@
 import Contact from '../../../models/Contact'; 
-import { validateAddContact } from '../../../utils/validation';
+import { validateContact } from '../../../utils/validation';
 import dayjs from 'dayjs';
 
 export default async function handler(req, res) {
@@ -7,7 +7,7 @@ export default async function handler(req, res) {
     const { userId, name, email, phoneNumber, address, timezone } = req.body;
 
     try {
-      await validateAddContact(req.body);
+      await validateContact(req.body);
 
       const existingContact = await Contact.findOne({ where: { email } });
       if (existingContact) {
