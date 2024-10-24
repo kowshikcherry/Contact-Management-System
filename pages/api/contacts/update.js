@@ -5,55 +5,69 @@ import dayjs from 'dayjs';
 
 export default async function handler(req, res) {
     if (req.method === 'PUT') {
-        const { id, userId, name, email, phoneNumber, address, timezone } = req.body;
+        const contactsPayload = req.body; 
+        const updatedContacts = [];
+        const errors = []; 
 
-        try {
-            await validateContact(req.body); 
-            
-            const contact = await Contact.findByPk(id); 
-            if (!contact) {
-                return res.status(404).json({ message: 'Contact not found' });
-            }
-            const contactEmail = await Contact.findOne({
-                where: {
-                    email: email,
-                    id: {
-                        [Op.ne]: id 
-                    }
+        for (const contactData of contactsPayload) {
+            const { id, userId, name, email, phoneNumber, address, timezone } = contactData;
+
+            try {
+                await validateContact(contactData);
+
+                const contact = await Contact.findByPk(id);
+                if (!contact) {
+                    errors.push({ id, message: 'Contact not found' });
+                    continue;
                 }
-            });
-            if (contactEmail) {
-                return res.status(404).json({ message: 'Duplicate email found' });
-            }
-            
-            await contact.update({
-                userId,
-                name,
-                email,
-                phoneNumber,
-                address,
-                timezone,
-                updated_at: dayjs().toISOString(), 
-            });
-            return res.status(200).json({
-                message: 'Contact updated successfully',
-                contact, 
-            });
 
-        } catch (error) {
-            if (error.name === 'ValidationError') {
-                return res.status(400).json({
-                    message: 'Validation Error',
-                    errors: error.errors || error.message || 'Invalid input',
+                const contactEmail = await Contact.findOne({
+                    where: {
+                        email: email,
+                        id: {
+                            [Op.ne]: id
+                        }
+                    }
                 });
-            }
+                if (contactEmail) {
+                    errors.push({ id, email, message: 'Duplicate email found' });
+                    continue; 
+                }
 
-            return res.status(500).json({
-                message: 'Server error',
-                error: error.message || 'An unexpected error occurred',
-            });
+                await contact.update({
+                    userId,
+                    name,
+                    email,
+                    phoneNumber,
+                    address,
+                    timezone,
+                    updated_at: dayjs().toISOString(),
+                });
+
+                updatedContacts.push(contact);
+
+            } catch (error) {
+                if (error.name === 'ValidationError') {
+                    errors.push({
+                        id,
+                        message: 'Validation Error',
+                        details: error.errors || error.message || 'Invalid input',
+                    });
+                } else {
+                    errors.push({
+                        id,
+                        message: 'Server error',
+                        details: error.message || 'An unexpected error occurred',
+                    });
+                }
+            }
         }
 
+        return res.status(200).json({
+            message: 'Contacts processed successfully',
+            updatedContacts,
+            errors,
+        });
     } else {
         return res.status(405).json({ message: 'Method not allowed' });
     }
