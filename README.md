@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Contact Management System API
 
-## Getting Started
+## Overview
 
-First, run the development server:
+This project is a comprehensive RESTful API for a contact management system developed using Next.js. It focuses on user authentication, contact management features, data validation, date-time handling with timezones, file handling, and CSV/Excel parsing.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Objective
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The objective of this assignment is to create a robust backend system that allows users to manage contacts efficiently while ensuring security and data integrity.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## Features
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1. **User Authentication**
+   - User registration and login functionality using JWT (JSON Web Tokens).
+   - Email verification upon registration.
+   - Password reset functionality via one-time code.
 
-## Learn More
+2. **Contact Management**
+   - Endpoints for:
+     - Adding new contacts (name, email, phone number, address, timezone).
+     - Retrieving contacts with filtering (by name, email, timezone) and sorting.
+     - Updating contact details.
+     - Deleting contacts (soft delete).
+     - Batch processing for adding/updating multiple contacts.
 
-To learn more about Next.js, take a look at the following resources:
+3. **Data Validation**
+   - validation for user input using libraries like Yup.
+   - Unique constraints on emails in the user and contact tables.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+4. **Date-Time Handling**
+   - Store timestamps in UTC and convert to the user’s timezone upon retrieval.
+   - Feature to retrieve contacts created within a specific date range.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+5. **File Handling**
+   - CSV and Excel file upload functionality for bulk contact creation/updates.
+   - Data validation against existing constraints before saving to the database.
+   - Download endpoint for CSV/Excel files of all contacts.
 
-## Deploy on Vercel
+6. **Database**
+   - SQL database (PostgreSQL/MySQL) for user and contact information storage.
+   - Normalized database schema with necessary relationships.
+   - Transactions for batch processing and file uploads to ensure data integrity.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+7. **Security**
+   - Rate limiting on sensitive endpoints (**login**, **registration**, **Retrieving contacts**, **Adding new contacts**, **Updating contact details**, **Deleting contacts**, **file uploading and file downloading**).
+   - Proper hashing and secure storage of sensitive information (passwords).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Requirements
+
+- Node.js
+- Next.js
+- SQL Database (MySQL)
+- Libraries: bcryptjs, csv-parse, csv-parser, dayjs, dotenv, fast-csv, joi, jsonwebtoken, multer, mysql2, next, nodemailer, react, react-dom, sequelize, xlsx, yup
+
+## Setup Instructions
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/kowshikcherry/Contact-Management-System
+   cd Contact-Management-System
+2. Install dependencies:**npm install**
+4. Set up the database:
+   **Create a database in your SQL server.
+   Run the migrations to set up the tables.**
+5. Environment Variables:
+   **Once recheck the environment Variables**
+6. Run the backend server:
+   **npm run dev**
+## API Documentation
+1. **The API documentation is available using Postman.**
+
+
+
+
+   
+   
