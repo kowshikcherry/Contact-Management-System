@@ -13,7 +13,12 @@ const upload = multer({
 const parseCSV = (fileBuffer) => {
   return new Promise((resolve, reject) => {
     const contacts = [];
+<<<<<<< HEAD
     const readableStream = require("stream").Readable.from(fileBuffer);
+=======
+    const stream = fileBuffer.toString();
+    const readableStream = require("stream").Readable.from(stream);
+>>>>>>> 0bf3b90ab7f7bb2f26b935a4db63b4dba6d7af95
 
     readableStream
       .pipe(csvParser())
@@ -55,11 +60,19 @@ export const config = {
 };
 
 export default async function handler(req, res) {
+<<<<<<< HEAD
   await rateLimiter(req, res, async () => {
     if (req.method !== "POST") {
       return res.status(405).json({ message: "Method not allowed" });
     }
 
+=======
+  if (req.method !== "POST") {
+    return res.status(405).json({ message: "Method not allowed" });
+  }
+
+  rateLimiter(req, res, async () => {
+>>>>>>> 0bf3b90ab7f7bb2f26b935a4db63b4dba6d7af95
     upload.single("file")(req, res, async (err) => {
       if (err) {
         return res
@@ -88,7 +101,11 @@ export default async function handler(req, res) {
         }
 
         contacts.forEach((contact) => {
+<<<<<<< HEAD
           contact.userId = req.user.id;
+=======
+          contact.userId = user.id;
+>>>>>>> 0bf3b90ab7f7bb2f26b935a4db63b4dba6d7af95
         });
 
         await bulkUpsertContacts(contacts);

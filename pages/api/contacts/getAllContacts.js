@@ -9,8 +9,13 @@ dayjs.extend(utc);
 dayjs.extend(timezone);
 
 export default async function handler(req, res) {
+<<<<<<< HEAD
   await rateLimiter(req, res, async () => {
     if (req.method === "GET") {
+=======
+  if (req.method === "GET") {
+    rateLimiter(req, res, async () => {
+>>>>>>> 0bf3b90ab7f7bb2f26b935a4db63b4dba6d7af95
       const {
         name,
         email,
@@ -23,7 +28,11 @@ export default async function handler(req, res) {
 
       const whereClause = {
         isActive: 1,
+<<<<<<< HEAD
         userId: req.user.id,
+=======
+        userId: user.id,
+>>>>>>> 0bf3b90ab7f7bb2f26b935a4db63b4dba6d7af95
       };
 
       if (name) {
@@ -76,8 +85,15 @@ export default async function handler(req, res) {
           error: error.message || "An unexpected error occurred",
         });
       }
+<<<<<<< HEAD
     } else {
       return res.status(405).json({ message: "Method not allowed" });
     }
   });
+=======
+    });
+  } else {
+    return res.status(405).json({ message: "Method not allowed" });
+  }
+>>>>>>> 0bf3b90ab7f7bb2f26b935a4db63b4dba6d7af95
 }
