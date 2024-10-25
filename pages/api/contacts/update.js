@@ -2,9 +2,23 @@ import { Op } from 'sequelize';
 import Contact from '../../../models/Contact'; 
 import { validateContact } from '../../../utils/validation'; 
 import dayjs from 'dayjs';
+import { verifyToken } from '../../../utils/auth';
 
 export default async function handler(req, res) {
     if (req.method === 'PUT') {
+
+        const token = req.headers.authorization?.split(' ')[1];
+        if (!token) {
+            return res.status(401).json({ message: 'No token provided.' });
+        }
+        
+        let user;
+        try {
+            user = verifyToken(token);
+        } catch (error) {
+            return res.status(403).json({ message: error.message }); 
+        }
+
         const contactsPayload = req.body; 
         const updatedContacts = [];
         const errors = []; 

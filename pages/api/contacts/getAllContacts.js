@@ -3,15 +3,32 @@ import { Op } from 'sequelize';
 import dayjs from 'dayjs'; 
 import utc from 'dayjs/plugin/utc'; 
 import timezone from 'dayjs/plugin/timezone'; 
+import { verifyToken } from '../../../utils/auth'; 
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
 
 export default async function handler(req, res) {
     if (req.method === 'GET') {
+        
+        const token = req.headers.authorization?.split(' ')[1];
+        if (!token) {
+            return res.status(401).json({ message: 'No token provided.' });
+        }
+
+        let user;
+        try {
+            user = verifyToken(token); 
+        } catch (error) {
+            return res.status(403).json({ message: error.message }); 
+        }
+
         const { name, email, timezone, sortBy, order = 'ASC', startDate, endDate } = req.query;
         
-        const whereClause = {};
+        const whereClause = {
+            isActive: 1,
+            userId: user.id, 
+        };
         
         if (name) {
             whereClause.name = {
