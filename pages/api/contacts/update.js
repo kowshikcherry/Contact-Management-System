@@ -5,14 +5,24 @@ import dayjs from "dayjs";
 import rateLimiter from "../../../utils/rateLimiter";
 
 export default async function handler(req, res) {
+<<<<<<< HEAD
   await rateLimiter(req, res, async () => {
     if (req.method === "PUT") {
+=======
+  if (req.method === "PUT") {
+    rateLimiter(req, res, async () => {
+>>>>>>> 0bf3b90ab7f7bb2f26b935a4db63b4dba6d7af95
       const contactsPayload = req.body;
       const updatedContacts = [];
       const errors = [];
 
       for (const contactData of contactsPayload) {
+<<<<<<< HEAD
         const { id, name, email, phoneNumber, address, timezone } = contactData;
+=======
+        const { id, userId, name, email, phoneNumber, address, timezone } =
+          contactData;
+>>>>>>> 0bf3b90ab7f7bb2f26b935a4db63b4dba6d7af95
 
         try {
           await validateContact(contactData);
@@ -23,6 +33,7 @@ export default async function handler(req, res) {
             continue;
           }
 
+<<<<<<< HEAD
           if (contact.userId !== req.user.id) {
             errors.push({
               id,
@@ -36,6 +47,14 @@ export default async function handler(req, res) {
             where: {
               email: email,
               id: { [Op.ne]: id },
+=======
+          const contactEmail = await Contact.findOne({
+            where: {
+              email: email,
+              id: {
+                [Op.ne]: id,
+              },
+>>>>>>> 0bf3b90ab7f7bb2f26b935a4db63b4dba6d7af95
             },
           });
           if (contactEmail) {
@@ -44,6 +63,10 @@ export default async function handler(req, res) {
           }
 
           await contact.update({
+<<<<<<< HEAD
+=======
+            userId,
+>>>>>>> 0bf3b90ab7f7bb2f26b935a4db63b4dba6d7af95
             name,
             email,
             phoneNumber,
@@ -75,8 +98,15 @@ export default async function handler(req, res) {
         updatedContacts,
         errors,
       });
+<<<<<<< HEAD
     } else {
       return res.status(405).json({ message: "Method not allowed" });
     }
   });
+=======
+    });
+  } else {
+    return res.status(405).json({ message: "Method not allowed" });
+  }
+>>>>>>> 0bf3b90ab7f7bb2f26b935a4db63b4dba6d7af95
 }

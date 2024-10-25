@@ -4,8 +4,13 @@ import xlsx from "xlsx";
 import rateLimiter from "../../../utils/rateLimiter";
 
 export default async function handler(req, res) {
+<<<<<<< HEAD
   await rateLimiter(req, res, async () => {
     if (req.method === "GET") {
+=======
+  if (req.method === "GET") {
+    rateLimiter(req, res, async () => {
+>>>>>>> 0bf3b90ab7f7bb2f26b935a4db63b4dba6d7af95
       const { format } = req.query;
 
       try {
@@ -19,7 +24,11 @@ export default async function handler(req, res) {
             "timezone",
             "createdAt",
           ],
+<<<<<<< HEAD
           where: { userId: req.user.id },
+=======
+          where: { userId: user.id },
+>>>>>>> 0bf3b90ab7f7bb2f26b935a4db63b4dba6d7af95
         });
 
         const contactsData = contacts.map((contact) => ({
@@ -62,7 +71,11 @@ export default async function handler(req, res) {
             'attachment; filename="contacts.xlsx"'
           );
 
+<<<<<<< HEAD
           res.end(buffer);
+=======
+          res.send(buffer);
+>>>>>>> 0bf3b90ab7f7bb2f26b935a4db63b4dba6d7af95
         } else {
           return res
             .status(400)
@@ -74,8 +87,15 @@ export default async function handler(req, res) {
           error: error.message || "An unexpected error occurred",
         });
       }
+<<<<<<< HEAD
     } else {
       return res.status(405).json({ message: "Method not allowed" });
     }
   });
+=======
+    });
+  } else {
+    return res.status(405).json({ message: "Method not allowed" });
+  }
+>>>>>>> 0bf3b90ab7f7bb2f26b935a4db63b4dba6d7af95
 }
