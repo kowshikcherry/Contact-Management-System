@@ -27,6 +27,23 @@ const User = sequelize.define(
       allowNull: false,
       defaultValue: true,
     },
+    isVerified: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+    verificationToken: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    otc: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    otc_expiry: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
   },
   {
     timestamps: true,

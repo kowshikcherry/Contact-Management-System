@@ -13,13 +13,21 @@ export default async function handler(req, res) {
     await sequelize.sync();
     const user = await User.findOne({ where: { email } });
 
-    if (!user)
-      return res.status(401).json({ message: "Invalid email or password" });
+    if (!user) {
+      return res.status(404).json({ message: "User does not exist" });
+    }
+
+    if (!user.isVerified) {
+      return res
+        .status(403)
+        .json({ message: "Please verify your email address" });
+    }
 
     const isPasswordValid = await comparePassword(password, user.password);
 
-    if (!isPasswordValid)
+    if (!isPasswordValid) {
       return res.status(401).json({ message: "Invalid email or password" });
+    }
 
     const token = generateToken(user);
     res.status(200).json({ message: "Login successful", token });

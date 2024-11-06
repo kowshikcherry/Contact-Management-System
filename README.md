@@ -11,11 +11,13 @@ The objective of this assignment is to create a robust backend system that allow
 ## Features
 
 1. **User Authentication**
+
    - User registration and login functionality using JWT (JSON Web Tokens).
    - Email verification upon registration.
    - Password reset functionality via one-time code.
 
 2. **Contact Management**
+
    - Endpoints for:
      - Adding new contacts (name, email, phone number, address, timezone).
      - Retrieving contacts with filtering (by name, email, timezone) and sorting.
@@ -24,19 +26,23 @@ The objective of this assignment is to create a robust backend system that allow
      - Batch processing for adding/updating multiple contacts.
 
 3. **Data Validation**
+
    - validation for user input using libraries like Yup.
    - Unique constraints on emails in the user and contact tables.
 
 4. **Date-Time Handling**
+
    - Store timestamps in UTC and convert to the user’s timezone upon retrieval.
    - Feature to retrieve contacts created within a specific date range.
 
 5. **File Handling**
+
    - CSV and Excel file upload functionality for bulk contact creation/updates.
    - Data validation against existing constraints before saving to the database.
    - Download endpoint for CSV/Excel files of all contacts.
 
 6. **Database**
+
    - SQL database (PostgreSQL/MySQL) for user and contact information storage.
    - Normalized database schema with necessary relationships.
    - Transactions for batch processing and file uploads to ensure data integrity.
@@ -58,19 +64,16 @@ The objective of this assignment is to create a robust backend system that allow
    ```bash
    git clone https://github.com/kowshikcherry/Contact-Management-System
    cd Contact-Management-System
+   ```
 2. Install dependencies:**npm install**
-4. Set up the database:
+3. Set up the database:
    **Create a database in your SQL server.
    Run the migrations to set up the tables.**
-5. Environment Variables:
+4. Environment Variables:
    **Once recheck the environment Variables**
-6. Run the backend server:
+5. Run the backend server:
    **npm run dev**
+
 ## API Documentation
+
 1. **The API documentation is available using Postman.**
-
-
-
-
-   
-   
