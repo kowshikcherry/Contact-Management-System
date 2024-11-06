@@ -1,0 +1,16 @@
+[33mbf21278[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmy-new-branch[m[33m, [m[1;31morigin/my-new-branch[m[33m)[m final code with readme file
+[33m06c4d69[m final code
+[33m0652e1a[m added rate-limiting to all api's and rechecked the entire code
+[33me0b9c4f[m added upload file api and authentication for all api's
+[33mb28cb67[m added download api to download the data in database
+[33m776daf8[m added time renge filter in get api
+[33mf7bb5ff[m developed batch processing in update contacts api
+[33m49d4563[m developed batch processing in add contacts api
+[33mfea5db0[m developed get contacts api
+[33mae2c3ae[m developed delete contact api
+[33maec4606[m developed updated contact api
+[33ma2701ca[m added isActive columns for user and contact models
+[33m8ec4ad3[m developed created contact api
+[33m18efc8d[m developed login and register
+[33m4b2ea9c[m added required packages
+[33m881a75e[m Initial commit from Create Next App
