@@ -4,8 +4,13 @@ import dayjs from "dayjs";
 import rateLimiter from "../../../utils/rateLimiter";
 
 export default async function handler(req, res) {
+<<<<<<< HEAD
   await rateLimiter(req, res, async () => {
     if (req.method === "POST") {
+=======
+  if (req.method === "POST") {
+    rateLimiter(req, res, async () => {
+>>>>>>> 0bf3b90ab7f7bb2f26b935a4db63b4dba6d7af95
       const contactsPayload = req.body;
       const createdContacts = [];
       const errors = [];
@@ -17,7 +22,11 @@ export default async function handler(req, res) {
           await validateContact(contactData);
 
           const existingContact = await Contact.findOne({
+<<<<<<< HEAD
             where: { email, userId: req.user.id },
+=======
+            where: { email, userId: user.id },
+>>>>>>> 0bf3b90ab7f7bb2f26b935a4db63b4dba6d7af95
           });
 
           if (existingContact) {
@@ -29,7 +38,11 @@ export default async function handler(req, res) {
           }
 
           const newContact = await Contact.create({
+<<<<<<< HEAD
             userId: req.user.id,
+=======
+            userId: user.id,
+>>>>>>> 0bf3b90ab7f7bb2f26b935a4db63b4dba6d7af95
             name,
             email,
             phoneNumber,
@@ -61,8 +74,15 @@ export default async function handler(req, res) {
         createdContacts,
         errors,
       });
+<<<<<<< HEAD
     } else {
       return res.status(405).json({ message: "Method not allowed" });
     }
   });
+=======
+    });
+  } else {
+    return res.status(405).json({ message: "Method not allowed" });
+  }
+>>>>>>> 0bf3b90ab7f7bb2f26b935a4db63b4dba6d7af95
 }
